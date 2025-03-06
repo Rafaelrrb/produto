@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: loja
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha
+    ports:
+      - '3001:3306'
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  nestjs:
+    image: node:20
+    container_name: nestjs
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=loja
+      - DB_USER=root
+      - DB_PASSWORD=senha
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mariadb
+    command:
+      [
+        'bash',
+        '-c',
+        'sleep 10 && cd /app && npm install && npx prisma migrate deploy && npm run build && npm run start:dev',
+      ]
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+volumes:
+  mariadb_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
