@@ -51,13 +51,14 @@ O comando do serviço **NestJS** foi configurado para garantir que o banco de da
 
 **Corpo da Requisição:**
 
-````json
+```json
 {
   "nome": "Produto Exemplo",
   "descricao": "Descrição do produto exemplo",
-  "preco": 100.00,
+  "preco": 100.0,
   "quantidade": 50
 }
+```
 
 ### Resposta
 
@@ -70,10 +71,10 @@ O comando do serviço **NestJS** foi configurado para garantir que o banco de da
   "codigo": "12345",
   "nome": "Produto Exemplo",
   "descricao": "Descrição do produto exemplo",
-  "preco": 100.00,
+  "preco": 100.0,
   "quantidade": 50
 }
-````
+```
 
 ### 2. Listar Todos os Produtos
 
